@@ -16,7 +16,7 @@ export class Converter {
 
         fs.writeFileSync(m3u8, this.quality[quality]);
 
-        const p = child.spawn(__dirname + "/../ffmpeg/ffmpeg.exe", [
+        const p = child.spawn("ffmpeg", [
             "-y",
             "-protocol_whitelist", "file,http,https,tcp,tls",
             "-i", m3u8,

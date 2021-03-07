@@ -1,6 +1,5 @@
 import { Anime, Constants } from ".";
-
-const axios = require('axios');
+import * as puppeteer from 'puppeteer';
 
 export class Search {
 
@@ -19,8 +18,11 @@ export class Search {
     }
 
     async get(): Promise<Array<Anime>> {
-        const res = await axios.get(Constants[this.type]);
-        this.json = res.data;
+        const browser = await puppeteer.launch(Constants.PUPPETEER);
+        const page = await browser.newPage();
+        await page.goto(Constants[this.type]);
+
+        this.json = JSON.parse(await page.evaluate(() => document.body.innerText));
 
         const arr: Array<Anime> = [];
         this.json.forEach(e => {
@@ -28,6 +30,7 @@ export class Search {
                 arr.push(new Anime(Constants.BASE + e.url));
             }
         });
+        await browser.close();
         return new Promise<Array<Anime>>(resolve => resolve(arr));
     }
 

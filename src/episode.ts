@@ -23,6 +23,7 @@ export class Episode {
     async retrieveInfos() {
         const browser = await puppeteer.launch(Constants.PUPPETEER);
         const page = await browser.newPage();
+        page.setDefaultNavigationTimeout(0);
         await page.goto(this.url);
 
         const body = await page.$("body");

@@ -16,6 +16,7 @@ export class PStream {
     async retrieveInfos() {
         const browser = await puppeteer.launch(Constants.PUPPETEER);
         const page = await browser.newPage();
+        page.setDefaultNavigationTimeout(0);
         await page.goto(this.url);
 
         this.down = await page.evaluate(async () => {

@@ -21,7 +21,7 @@ export class Search {
         const browser = await puppeteer.launch(Constants.PUPPETEER);
         const page = await browser.newPage();
         await page.goto(Constants[this.type]);
-
+        page.setDefaultNavigationTimeout(0);
         this.json = JSON.parse(await page.evaluate(() => document.body.innerText));
 
         const arr: Array<Anime> = [];

@@ -20,6 +20,7 @@ export class Anime {
 
         const browser = await puppeteer.launch(Constants.PUPPETEER);
         const page = await browser.newPage();
+        page.setDefaultNavigationTimeout(0);
         await page.goto(this.url);
 
         const infos = await page.$("div#info");
